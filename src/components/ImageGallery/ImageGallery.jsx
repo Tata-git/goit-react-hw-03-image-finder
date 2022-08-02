@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryStyle } from './ImageGallery.styled';
 
@@ -8,8 +7,7 @@ export const ImageGallery = ({ images, onLargeImage }) => {
     <ImageGalleryStyle>
       {images.map(({ id, tags, webformatURL, largeImageURL }) => (
         <ImageGalleryItem
-          key={nanoid()}
-          // key={id}
+          key={id}
           tags={tags}
           webformatURL={webformatURL}
           openModal={() => onLargeImage(largeImageURL)}
@@ -22,13 +20,10 @@ ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.number.isRequired,
-      // largeImageURL: PropTypes.string,
-
       largeImageURL: PropTypes.string.isRequired,
       webformatURL: PropTypes.string.isRequired,
-      tags: PropTypes.string,
+      tags: PropTypes.string.isRequired,
     })
   ),
   onLargeImage: PropTypes.func.isRequired,
-  // onLargeImage: PropTypes.func,
 };

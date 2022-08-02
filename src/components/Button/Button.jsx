@@ -10,8 +10,6 @@ export const Button = ({ handleClick, text }) => {
 };
 
 Button.propTypes = {
-  handleClick: PropTypes.func,
-  // handleClick: PropTypes.func.isRequired,
-
+  handleClick: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
 };

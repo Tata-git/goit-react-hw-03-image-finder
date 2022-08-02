@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Button } from './Button/Button';
+// import { Audio } from 'react-loader-spinner';
 import { getImages } from '../services/api';
 import { mapperImages } from './Utils/mapper';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -27,14 +27,12 @@ export class App extends Component {
 
   componentDidUpdate(_, prevState) {
     const { queryValue, page } = this.state;
-    console.log('prevState.page: ', prevState.page);
-    console.log('page: ', page);
-
-    console.log('prevState.queryValue: ', prevState.queryValue);
-    console.log('queryValue: ', queryValue);
-
+    // console.log('prevState.page: ', prevState.page);
+    // console.log('page: ', page);
+    // console.log('prevState.queryValue: ', prevState.queryValue);
+    // console.log('queryValue: ', queryValue);
     if (queryValue !== prevState.queryValue || page !== prevState.page) {
-      console.log('Изменился queryValue');
+      // console.log('Изменился queryValue');
 
       this.setState({ status: Status.PENDING });
       this.fetchImages(queryValue, page);
@@ -53,7 +51,6 @@ export class App extends Component {
       }))
     );
   };
-  // const { total, hits } = data;
 
   handleSearchBarSubmit = queryValue => {
     console.log(queryValue);
@@ -83,9 +80,24 @@ export class App extends Component {
           <Modal imageLargeModal={imageModal} closeModal={this.closeModal} />
         )}
         {hasNextPage && (
-          <Button text="Load more" onClick={this.incrementPage} />
+          <Button text="Load more" handleClick={this.incrementPage} />
         )}
       </AppStyle>
     );
   }
 }
+
+//-----------------------------
+// {
+//   status && (
+//     <Audio
+//       height="80"
+//       width="80"
+//       radius="9"
+//       color="green"
+//       ariaLabel="three-dots-loading"
+//       wrapperStyle
+//       wrapperClass
+//     />
+//   );
+// }

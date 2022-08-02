@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-
 // import { Button } from '../Button/Button';
 import { ModalStyled, Overlay } from './Modal.styled.js';
 
@@ -20,6 +19,11 @@ export class Modal extends Component {
       this.props.closeModal();
     }
   };
+
+static propTypes = {
+  imageLargeModal: PropTypes.string.isRequired
+}
+
   render() {
     const { imageLargeModal } = this.props;
     return (
@@ -33,6 +37,4 @@ export class Modal extends Component {
   }
 }
 
-Modal.propTypes = {
-  imageLargeModal: PropTypes.string.isRequired
-}
+

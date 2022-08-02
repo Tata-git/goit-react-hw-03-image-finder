@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import {
   SearchbarStyle,
   SearchInputStyle,
@@ -26,6 +27,10 @@ export class Searchbar extends Component {
 
     this.props.onSubmitApp(this.state.queryValue);
     this.setState({ queryValue: '' });
+  };
+
+  static propTypes = {
+    onSubmitApp: PropTypes.func.isRequired,
   };
 
   render() {
