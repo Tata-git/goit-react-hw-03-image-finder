@@ -22,6 +22,8 @@ ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.number.isRequired,
+      // largeImageURL: PropTypes.string,
+
       largeImageURL: PropTypes.string.isRequired,
       webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string,
