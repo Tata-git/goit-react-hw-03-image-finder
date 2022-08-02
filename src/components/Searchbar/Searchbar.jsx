@@ -5,7 +5,6 @@ import {
   SearchInputStyle,
   SearchButtonStyle,
   SearchFormStyle,
-  SearchSpanStyle,
 } from './Searchbar.styled.js';
 
 export class Searchbar extends Component {

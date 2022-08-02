@@ -21,7 +21,7 @@ export class Modal extends Component {
     }
   };
   render() {
-    const { imageLargeModal, closeModal } = this.props;
+    const { imageLargeModal } = this.props;
     return (
       <Overlay onClick={this.onBackground}>
         <ModalStyled>
