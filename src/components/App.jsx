@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Audio } from 'react-loader-spinner';
 import { getImages } from '../services/api';
 import { mapperImages } from './Utils/mapper';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -8,6 +7,7 @@ import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
 import { perPage } from '../services/api';
 import { AppStyle } from './App.styled';
+import { Loader } from './Loader/Loader';
 
 const Status = {
   IDLE: 'idle',
@@ -23,6 +23,8 @@ export class App extends Component {
     status: Status.IDLE,
     imageModal: '',
     hasNextPage: false,
+    isLoading: false,
+    error: null,
   };
 
   componentDidUpdate(_, prevState) {
@@ -42,14 +44,22 @@ export class App extends Component {
   fetchImages = (queryValue, page) => {
     console.log(page);
     console.log(queryValue);
+    //---------------------  isLoading: true  ----------------------------
+    this.setState({ isLoading: true });
 
-    getImages(queryValue, page).then(data =>
-      this.setState(prevState => ({
-        images: [...prevState.images, ...mapperImages(data.hits)],
-        status: Status.RESOLVED,
-        hasNextPage: page * perPage < data.total,
-      }))
-    );
+    getImages(queryValue, page)
+      .then(data =>
+        this.setState(prevState => ({
+          images: [...prevState.images, ...mapperImages(data.hits)],
+          status: Status.RESOLVED,
+          hasNextPage: page * perPage < data.total,
+        }))
+      )
+      .catch(error => console.log(error))
+      .finally(() => {
+        //---------------------  isLoading: false  ----------------------------
+        this.setState({ isLoading: false });
+      });
   };
 
   handleSearchBarSubmit = queryValue => {
@@ -70,17 +80,23 @@ export class App extends Component {
   };
 
   render() {
-    const { images, imageModal, hasNextPage } = this.state;
+    const { images, imageModal, hasNextPage, isLoading } = this.state;
 
     return (
       <AppStyle>
+        {isLoading && <Loader />}
+
         <Searchbar onSubmitApp={this.handleSearchBarSubmit} />
         <ImageGallery images={images} onLargeImage={this.openModal} />
         {imageModal && (
           <Modal imageLargeModal={imageModal} closeModal={this.closeModal} />
         )}
         {hasNextPage && (
-          <Button text="Load more" handleClick={this.incrementPage} />
+          <Button
+            text="Load more"
+            handleClick={this.incrementPage}
+            isLoading={isLoading}
+          />
         )}
       </AppStyle>
     );
@@ -88,16 +104,3 @@ export class App extends Component {
 }
 
 //-----------------------------
-// {
-//   status && (
-//     <Audio
-//       height="80"
-//       width="80"
-//       radius="9"
-//       color="green"
-//       ariaLabel="three-dots-loading"
-//       wrapperStyle
-//       wrapperClass
-//     />
-//   );
-// }
