@@ -9,18 +9,11 @@ import { perPage } from '../services/api';
 import { AppStyle } from './App.styled';
 import { Loader } from './Loader/Loader';
 
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
 export class App extends Component {
   state = {
     page: 1,
     queryValue: '',
     images: [],
-    status: Status.IDLE,
     imageModal: '',
     hasNextPage: false,
     isLoading: false,
@@ -35,8 +28,8 @@ export class App extends Component {
     // console.log('queryValue: ', queryValue);
     if (queryValue !== prevState.queryValue || page !== prevState.page) {
       // console.log('Изменился queryValue');
-
-      this.setState({ status: Status.PENDING });
+      //---------------------  isLoading: true  ----------------------------
+      this.setState({ isLoading: true });
       this.fetchImages(queryValue, page);
     }
   }
@@ -51,7 +44,6 @@ export class App extends Component {
       .then(data =>
         this.setState(prevState => ({
           images: [...prevState.images, ...mapperImages(data.hits)],
-          status: Status.RESOLVED,
           hasNextPage: page * perPage < data.total,
         }))
       )
@@ -84,13 +76,16 @@ export class App extends Component {
 
     return (
       <AppStyle>
-        {isLoading && <Loader />}
-
         <Searchbar onSubmitApp={this.handleSearchBarSubmit} />
+
         <ImageGallery images={images} onLargeImage={this.openModal} />
+
         {imageModal && (
           <Modal imageLargeModal={imageModal} closeModal={this.closeModal} />
         )}
+
+        {isLoading && <Loader />}
+
         {hasNextPage && (
           <Button
             text="Load more"
@@ -102,5 +97,3 @@ export class App extends Component {
     );
   }
 }
-
-//-----------------------------
