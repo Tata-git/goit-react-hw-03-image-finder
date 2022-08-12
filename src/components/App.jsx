@@ -78,7 +78,7 @@ export class App extends Component {
       <AppStyle>
         <Searchbar onSubmitApp={this.handleSearchBarSubmit} />
 
-        <ImageGallery images={images} onLargeImage={this.openModal} />
+        {images.length > 0 && <ImageGallery images={images} onLargeImage={this.openModal} />}
 
         {imageModal && (
           <Modal imageLargeModal={imageModal} closeModal={this.closeModal} />
